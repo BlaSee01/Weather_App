@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <title>Weather APP by BlaSe</title>
     <link rel="stylesheet" href="styles.css">
@@ -41,15 +41,14 @@
 
         <script>
 
-        const apiKEY = "f04ec11e45ce7ea2e7e585fb86c084ee";
-        const apiURL = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+        const apiURL = "/weather?city=";
 
         const searchBox = document.querySelector(".search input");
         const searchBtn = document.querySelector(".search button");
         const weatherIcon = document.querySelector(".weather-icon");
 
         async function checkWeather(city){
-            const response = await fetch(apiURL + city + `&appid=${apiKEY}`);
+            const response = await fetch(apiURL + city);
 
             if(response.status == 404){
                 document.querySelector(".error").style.display = "block";
@@ -57,6 +56,8 @@
             }else{
                 var data = await response.json();
 
+                console.log(data);
+                console.log(data.weather[0].main);
                 document.querySelector(".city").innerHTML = data.name;
                 document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
                 document.querySelector(".humidity").innerHTML = data.main.humidity + "%";

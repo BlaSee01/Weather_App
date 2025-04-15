@@ -1,0 +1,8 @@
+# Node.js
+node_modules/
+
+# .env file with sensitive keys
+.env
+
+# Log files
+*.log
