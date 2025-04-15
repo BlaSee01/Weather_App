@@ -1,4 +1,4 @@
-# 🌦️ Weather App by BlaSe
+# 🌦️ Weather App
 Aplikacja pogodowa z graficznym interfejsem użytkownika stworzona w Node.js.
 Umożliwia wpisanie miasta i pobranie aktualnych danych pogodowych z OpenWeatherMap.
 
