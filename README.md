@@ -17,7 +17,6 @@ weather_app_JS/
 │   ├── index.html
 │   ├── styles.css
 │   └── images/
-|
 ├── server.mjs
 ├── .env
 ├── .gitignore
