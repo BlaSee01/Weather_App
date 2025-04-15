@@ -11,9 +11,7 @@ Node.js
 HTML/CSS/JS 
 
 ## 📁 Struktura projektu
-pgsql
-Kopiuj
-Edytuj
+```bash
 weather_app_JS/
 ├── public/
 │   ├── index.html
@@ -25,6 +23,7 @@ weather_app_JS/
 ├── .gitignore
 ├── package.json
 └── README.md
+```
 
 ## ▶️ Jak uruchomić lokalnie
 1. Sklonuj repo:
