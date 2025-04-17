@@ -27,6 +27,28 @@ app.get("/weather", async (req, res) => {
     }
 });
 
+app.get("/autocomplete", async (req, res) => {
+    const text = req.query.text;
+    const apiKey = process.env.GEOAPIFY_API_KEY;
+
+    if (!text || text.length < 3) return res.json([]);
+
+    try {
+        const response = await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&type=city&format=json&limit=5&apiKey=${apiKey}`);
+        const data = await response.json();
+
+        const suggestions = Array.isArray(data.results)
+  ? data.results.map(f => f.city || f.name).filter(Boolean)
+  : [];
+
+
+        res.json(suggestions);
+    } catch (error) {
+        res.status(500).json({ message: "Autocomplete error" });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

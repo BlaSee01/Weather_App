@@ -25,6 +25,7 @@ background-color: rgb(54, 47, 59);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .search input{
@@ -105,3 +106,75 @@ background-color: rgb(54, 47, 59);
     margin-top: 10px;
     display: none;
 }
+
+.suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 16px;
+    color: #333;
+}
+
+.suggestions li {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestions li:last-child {
+    border-bottom: none;
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.color-picker {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    color: #eee;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+
+.color-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-bubble span {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.color-bubble .bubble {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+
+.color-bubble input[type="color"] {
+    display: none; /* ukryj domyślne inputy */
+}
+

@@ -10,7 +10,10 @@
 
     <div class="card">
         <div class="search">
-            <input type="text" placeholder="enter city name" spellcheck="false">
+            <div class="search-wrapper">
+                <input type="text" placeholder="enter city name" spellcheck="false">
+                <ul class="suggestions"></ul>
+            </div>
             <button><img src="images/search.png"></button>
         </div>
         <div class="error">
@@ -37,6 +40,18 @@
                 </div>
             </div>
         </div>
+        <div class="color-picker">
+            <div class="color-bubble">
+                <span>Gradient Color 1</span>
+                <div class="bubble" id="bubble1"></div>
+                <input type="color" id="color1" value="#404ece">
+            </div>
+            <div class="color-bubble">
+                <span>Gradient Color 2</span>
+                <div class="bubble" id="bubble2"></div>
+                <input type="color" id="color2" value="#e93d70">
+            </div>
+        </div>       
     </div>
 
         <script>
@@ -56,8 +71,7 @@
             }else{
                 var data = await response.json();
 
-                console.log(data);
-                console.log(data.weather[0].main);
+                
                 document.querySelector(".city").innerHTML = data.name;
                 document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
                 document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
@@ -84,9 +98,76 @@
             } 
         }
 
-        searchBtn.addEventListener("click", ()=>{
-            checkWeather(searchBox.value);
-        })
+        searchBtn.addEventListener("click", () => {
+    checkWeather(searchBox.value);
+    suggestionsList.innerHTML = "";
+});
+
+
+        const suggestionsList = document.querySelector(".suggestions");
+
+        searchBox.addEventListener("input", async () => {
+        const input = searchBox.value.trim();
+
+        if (input.length < 2) {
+            suggestionsList.innerHTML = "";
+            return;
+        }
+
+        const res = await fetch(`/autocomplete?text=${input}`);
+        const cities = await res.json();
+
+        suggestionsList.innerHTML = cities.map(city => `<li>${city}</li>`).join("");
+
+        document.querySelectorAll(".suggestions li").forEach(item => {
+            item.addEventListener("click", () => {
+                searchBox.value = item.textContent;
+                suggestionsList.innerHTML = "";
+                checkWeather(item.textContent);
+            });
+        });
+    });
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        suggestionsList.innerHTML = "";
+    }
+});
+
+
+document.addEventListener("click", (e) => {
+    const searchWrapper = document.querySelector(".search-wrapper");
+    if (!searchWrapper.contains(e.target)) {
+        suggestionsList.innerHTML = "";
+    }
+});
+const colorInput1 = document.getElementById("color1");
+const colorInput2 = document.getElementById("color2");
+
+const bubble1 = document.getElementById("bubble1");
+const bubble2 = document.getElementById("bubble2");
+
+bubble1.style.backgroundColor = colorInput1.value;
+bubble2.style.backgroundColor = colorInput2.value;
+
+bubble1.addEventListener("click", () => colorInput1.click());
+bubble2.addEventListener("click", () => colorInput2.click());
+
+colorInput1.addEventListener("input", () => {
+    bubble1.style.backgroundColor = colorInput1.value;
+    updateGradient();
+});
+
+colorInput2.addEventListener("input", () => {
+    bubble2.style.backgroundColor = colorInput2.value;
+    updateGradient();
+});
+
+function updateGradient() {
+    const card = document.querySelector(".card");
+    card.style.background = `linear-gradient(${colorInput1.value}, ${colorInput2.value})`;
+}
+
 
         </script>
     </body>
