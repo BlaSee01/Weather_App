@@ -104,6 +104,13 @@
         }
 
         searchBtn.addEventListener("click", async () => {
+            const city = searchBox.value.trim();
+    
+    if (city === "") {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+        return;
+    }
     await checkWeather(searchBox.value);
     addCityToFavorites(searchBox.value);
     suggestionsList.innerHTML = "";
