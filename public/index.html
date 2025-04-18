@@ -16,6 +16,10 @@
             </div>
             <button><img src="images/search.png"></button>
         </div>
+        <div class="favorites">
+            <h3>Favorites</h3>
+            <ul class="favorites-list"></ul>
+        </div>        
         <div class="error">
             <p>WRONG city name!</p>
         </div>
@@ -71,6 +75,7 @@
             }else{
                 var data = await response.json();
 
+                console.log(data);
                 
                 document.querySelector(".city").innerHTML = data.name;
                 document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
@@ -98,8 +103,9 @@
             } 
         }
 
-        searchBtn.addEventListener("click", () => {
-    checkWeather(searchBox.value);
+        searchBtn.addEventListener("click", async () => {
+    await checkWeather(searchBox.value);
+    addCityToFavorites(searchBox.value);
     suggestionsList.innerHTML = "";
 });
 
@@ -120,11 +126,13 @@
         suggestionsList.innerHTML = cities.map(city => `<li>${city}</li>`).join("");
 
         document.querySelectorAll(".suggestions li").forEach(item => {
-            item.addEventListener("click", () => {
-                searchBox.value = item.textContent;
-                suggestionsList.innerHTML = "";
-                checkWeather(item.textContent);
-            });
+            item.addEventListener("click", async () => {
+            const city = item.textContent;
+            searchBox.value = city;
+            suggestionsList.innerHTML = "";
+            await checkWeather(city);
+            addCityToFavorites(city);
+        });
         });
     });
 
@@ -167,6 +175,52 @@ function updateGradient() {
     const card = document.querySelector(".card");
     card.style.background = `linear-gradient(${colorInput1.value}, ${colorInput2.value})`;
 }
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+function updateFavoritesUI() {
+    const favList = document.querySelector(".favorites-list");
+    favList.innerHTML = "";
+    favorites.forEach(city => {
+        const li = document.createElement("li");
+        
+        const citySpan = document.createElement("span");
+        citySpan.textContent = city;
+        citySpan.classList.add("favorite-city");
+        citySpan.addEventListener("click", () => {
+            searchBox.value = city;
+            checkWeather(city);
+        });
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
+        removeBtn.classList.add("remove-btn");
+        removeBtn.addEventListener("click", (e) => {
+            e.stopPropagation(); // nie uruchamiaj wyszukiwania
+            removeCityFromFavorites(city);
+        });
+
+        li.appendChild(citySpan);
+        li.appendChild(removeBtn);
+        favList.appendChild(li);
+    });
+}
+
+function removeCityFromFavorites(city) {
+    favorites = favorites.filter(c => c !== city);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    updateFavoritesUI();
+}
+
+function addCityToFavorites(city) {
+    if (!favorites.includes(city)) {
+        favorites.push(city);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        updateFavoritesUI();
+    }
+}
+
+updateFavoritesUI();
 
         </script>
     </body>

@@ -18,6 +18,7 @@ background-color: rgb(54, 47, 59);
     border-radius: 20px;
     padding: 40px 35px;
     text-align: center;
+    border: 4px solid silver;
 }
 
 .search{
@@ -178,3 +179,85 @@ background-color: rgb(54, 47, 59);
     display: none; /* ukryj domyślne inputy */
 }
 
+@media (max-width: 480px) {
+    .card {
+        padding: 20px;
+    }
+
+    .search input {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .search button {
+        width: 50px;
+        height: 50px;
+    }
+
+    .weather-icon {
+        width: 120px;
+        margin-top: 20px;
+    }
+
+    .weather h1 {
+        font-size: 50px;
+    }
+
+    .weather h2 {
+        font-size: 30px;
+    }
+
+    .humidity, .wind {
+        font-size: 22px;
+    }
+
+    .color-picker {
+        gap: 20px;
+    }
+}
+
+.favorites {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.favorites h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.favorites-list {
+    list-style: none;
+    padding: 0;
+}
+
+.favorites-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 4px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.favorites-list li:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+.favorite-city {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.remove-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.remove-btn:hover {
+    color: #ff6666;
+}
