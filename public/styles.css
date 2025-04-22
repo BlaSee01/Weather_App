@@ -176,10 +176,10 @@ background-color: rgb(54, 47, 59);
 }
 
 .color-bubble input[type="color"] {
-    display: none; /* ukryj domyślne inputy */
+    display: none; 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) { /* mobile */
     .card {
         padding: 20px;
     }
